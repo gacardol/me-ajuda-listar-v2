@@ -1,3 +1,4 @@
+
 var SHEETDB_URL = "https://sheetdb.io/api/v1/7x95jmwaouxrl";
 var flowData = {};
 var historico = [];
@@ -11,6 +12,16 @@ function dataAgora() {
   var hora = ("0"+d.getHours()).slice(-2);
   var min = ("0"+d.getMinutes()).slice(-2);
   return dia+"/"+mes+"/"+ano+" "+hora+":"+min;
+}
+
+function registrar(obs, tela) {
+  try {
+    fetch(SHEETDB_URL, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({data: {whatsapp: contato, observacao: obs, tela: tela, data_hora: dataAgora()}})
+    });
+  } catch(e) {}
 }
 
 function init() {
@@ -39,14 +50,22 @@ function comecar() {
   var v = document.getElementById("contato").value.trim();
   if (!v) { document.getElementById("erro").style.display = "block"; return; }
   contato = v;
-  try {
-    fetch(SHEETDB_URL, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({data: {whatsapp: v, observacao: "acessou", tela: "inicio", data_hora: dataAgora()}})
-    });
-  } catch(e) {}
+  registrar("acessou", "inicio");
   mostrarTela("inicio");
+}
+
+function feedback(tipo) {
+  var telaAtual = historico[historico.length - 1] || "desconhecida";
+  registrar(tipo, telaAtual);
+  var msg = tipo === "conseguiu_listar" ? "Que otimo! Fico feliz que conseguiu listar!" : "Entendi! Vamos te ajudar. Entre em contato com seu Account Manager ou clique em Lista pra mim.";
+  var h = "<div class=\"card\">";
+  h += "<div class=\"logo\">Me Ajuda a Listar</div>";
+  h += "<h2>" + msg + "</h2>";
+  h += "<p>Obrigada por usar o Me Ajuda a Listar!</p>";
+  h += "<button class=\"btn-primary\" onclick=\"mostrarTela('inicio')\">Voltar ao inicio</button>";
+  h += "<a class=\"btn-link\" href=\"https://amazonexteu.qualtrics.com/jfe/form/SV_eEhccc2rqm5WURw\" target=\"_blank\">Lista pra mim</a>";
+  h += "</div>";
+  document.getElementById("app").innerHTML = h;
 }
 
 function mostrarTela(id) {
@@ -79,6 +98,12 @@ function mostrarTela(id) {
     }
   }
 
+  h += "<div class=\"feedback-box\">";
+  h += "<p><strong>Conseguiu listar?</strong></p>";
+  h += "<button class=\"btn-success\" onclick=\"feedback('conseguiu_listar')\">Sim, consegui!</button>";
+  h += "<button class=\"btn-danger\" onclick=\"feedback('nao_conseguiu')\">Nao, preciso de ajuda</button>";
+  h += "</div>";
+
   if (historico.length > 1) {
     h += "<div class=\"footer-nav\">";
     h += "<button class=\"footer-btn\" onclick=\"voltar()\">Voltar</button>";
@@ -99,3 +124,4 @@ function voltar() {
 }
 
 init();
+
