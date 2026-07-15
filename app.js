@@ -4,7 +4,7 @@ var historico = [];
 var contato = "";
 
 function init() {
-  fetch("data/flow.json")
+  fetch("flow.json")
     .then(function(r) { return r.json(); })
     .then(function(d) { flowData = d; pedirContato(); })
     .catch(function() {
@@ -64,7 +64,7 @@ function mostrarTela(id) {
       if (o.link) {
         h += "<a class=\"btn-link\" href=\"" + o.link + "\" target=\"_blank\">" + o.text + "</a>";
       } else {
-        h += "<button class=\"btn-option\" onclick=\"mostrarTela(\'" + o.next + "\')\">" + o.text + "</button>";
+        h += "<button class=\"btn-option\" onclick=\"mostrarTela('" + o.next + "')\">" + o.text + "</button>";
       }
     }
   }
@@ -72,7 +72,7 @@ function mostrarTela(id) {
   if (historico.length > 1) {
     h += "<div class=\"footer-nav\">";
     h += "<button class=\"footer-btn\" onclick=\"voltar()\">Voltar</button>";
-    h += "<button class=\"footer-btn\" onclick=\"mostrarTela(\'inicio\')\">Inicio</button>";
+    h += "<button class=\"footer-btn\" onclick=\"mostrarTela('inicio')\">Inicio</button>";
     h += "<a class=\"footer-link\" href=\"https://amazonexteu.qualtrics.com/jfe/form/SV_eEhccc2rqm5WURw\" target=\"_blank\">Lista pra mim</a>";
     h += "</div>";
   }
