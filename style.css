@@ -1,3 +1,4 @@
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -206,3 +207,40 @@ p {
 .footer-link:hover {
   color: #FF9900;
 }
+
+.feedback-box {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 2px solid #EEE;
+}
+
+.btn-success {
+  width: 100%;
+  padding: 14px;
+  background: #067D62;
+  color: #FFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 6px 0;
+}
+
+.btn-success:hover { background: #056B53; }
+
+.btn-danger {
+  width: 100%;
+  padding: 14px;
+  background: #D13212;
+  color: #FFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 6px 0;
+}
+
+.btn-danger:hover { background: #B02A0F; }
+
