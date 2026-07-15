@@ -3,6 +3,16 @@ var flowData = {};
 var historico = [];
 var contato = "";
 
+function dataAgora() {
+  var d = new Date();
+  var dia = ("0"+d.getDate()).slice(-2);
+  var mes = ("0"+(d.getMonth()+1)).slice(-2);
+  var ano = d.getFullYear();
+  var hora = ("0"+d.getHours()).slice(-2);
+  var min = ("0"+d.getMinutes()).slice(-2);
+  return dia+"/"+mes+"/"+ano+" "+hora+":"+min;
+}
+
 function init() {
   fetch("flow.json")
     .then(function(r) { return r.json(); })
@@ -33,7 +43,7 @@ function comecar() {
     fetch(SHEETDB_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({data: {whatsapp: v, observacao: "inicio", tela: "inicio"}})
+      body: JSON.stringify({data: {whatsapp: v, observacao: "acessou", tela: "inicio", data_hora: dataAgora()}})
     });
   } catch(e) {}
   mostrarTela("inicio");
